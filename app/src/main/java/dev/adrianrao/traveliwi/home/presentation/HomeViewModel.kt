@@ -7,6 +7,8 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dev.adrianrao.traveliwi.home.domain.model.HomeFilterSettings
+import dev.adrianrao.traveliwi.home.domain.model.Region
 import dev.adrianrao.traveliwi.home.domain.repository.HomeRepository
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -82,9 +84,15 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun onBackPress(){
+    fun onBackPress() {
         state = state.copy(
             reply = null
+        )
+    }
+
+    fun onRegionSelect(region: Region) {
+        state = state.copy(
+            selectedRegion = region
         )
     }
 

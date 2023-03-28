@@ -3,7 +3,9 @@ package dev.adrianrao.traveliwi.home.data
 import dev.adrianrao.traveliwi.home.data.remote.OpenAIApi
 import dev.adrianrao.traveliwi.home.data.remote.dto.OpenAIRequestDto
 import dev.adrianrao.traveliwi.home.domain.repository.HomeRepository
-import dev.adrianrao.traveliwi.home.presentation.HomeFilterSettings
+import dev.adrianrao.traveliwi.home.domain.model.HomeFilterSettings
+import dev.adrianrao.traveliwi.home.domain.model.Place
+import dev.adrianrao.traveliwi.home.domain.model.Region
 
 class HomeRepositoryImpl(
     private val api: OpenAIApi
@@ -13,7 +15,7 @@ class HomeRepositoryImpl(
             var places = ""
             if (filterSettings.restaurant) places = "Restaurantes, "
             if (filterSettings.museums) places = "Museos, "
-            if(places.isNotBlank()) places = " y quiero visitar: ${places}"
+            if (places.isNotBlank()) places = " y quiero visitar: ${places}"
             val request = OpenAIRequestDto(
                 maxTokens = 1500,
                 model = "text-davinci-003",
@@ -25,5 +27,18 @@ class HomeRepositoryImpl(
         } catch (ex: Exception) {
             Result.failure(ex)
         }
+    }
+
+    override suspend fun getPopularPlaces(): Result<List<Place>> {
+        return Result.success(
+            listOf(
+                Place("USA", "New York", Region.AMERICA),
+                Place("Argentina", "Salta", Region.AMERICA),
+                Place("Espana", "Barcelona", Region.EUROPA),
+                Place("Australia", "Sydney", Region.OCEANIA),
+                Place("Japon", "Tokio", Region.ASIA),
+                Place("Italia", "Roma", Region.EUROPA),
+            )
+        )
     }
 }

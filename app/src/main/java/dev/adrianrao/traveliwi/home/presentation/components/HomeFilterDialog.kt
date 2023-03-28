@@ -11,7 +11,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import dev.adrianrao.traveliwi.home.presentation.HomeFilterDialogAction
-import dev.adrianrao.traveliwi.home.presentation.HomeFilterSettings
+import dev.adrianrao.traveliwi.home.domain.model.HomeFilterSettings
 
 @Composable
 fun HomeFilterDialog(

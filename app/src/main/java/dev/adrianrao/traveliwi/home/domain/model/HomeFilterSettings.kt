@@ -1,4 +1,4 @@
-package dev.adrianrao.traveliwi.home.presentation
+package dev.adrianrao.traveliwi.home.domain.model
 
 data class HomeFilterSettings(
     val people: Int = 1,
