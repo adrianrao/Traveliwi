@@ -11,6 +11,7 @@ data class HomeState(
     val filterSettingsBackup: HomeFilterSettings = HomeFilterSettings(),
     val reply: String? = null,
     val selectedRegion: Region = Region.TODAS,
-    val popularPlaces : List<Place> = emptyList(),
-    val popularPlacesBackup : List<Place> = emptyList()
+    val popularPlaces: List<Place> = emptyList(),
+    val popularPlacesBackup: List<Place> = emptyList(),
+    val isLoading: Boolean = false
 )

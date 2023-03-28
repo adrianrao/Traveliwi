@@ -10,6 +10,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.adrianrao.traveliwi.home.domain.model.HomeFilterSettings
 import dev.adrianrao.traveliwi.home.domain.model.Region
 import dev.adrianrao.traveliwi.home.domain.repository.HomeRepository
+import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -110,12 +111,21 @@ class HomeViewModel @Inject constructor(
 
     fun search() {
         viewModelScope.launch {
+
+            state = state.copy(
+                isLoading = true
+            )
+
             repository.getTravelInformation(state.searchText, state.filterSettingsBackup).onSuccess {
                 state = state.copy(
-                    reply = it
+                    reply = it,
+                    isLoading = false
                 )
             }.onFailure {
                 Log.e("HomeViewModel", it.message.toString())
+                state = state.copy(
+                    isLoading = false
+                )
             }
         }
     }
