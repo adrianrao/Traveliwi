@@ -5,7 +5,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import dev.adrianrao.traveliwi.home.data.remote.ApiKeyInterceptor
-import dev.adrianrao.traveliwi.home.data.remote.HomeRepositoryImpl
+import dev.adrianrao.traveliwi.home.data.HomeRepositoryImpl
 import dev.adrianrao.traveliwi.home.data.remote.OpenAIApi
 import dev.adrianrao.traveliwi.home.domain.repository.HomeRepository
 import okhttp3.OkHttpClient
