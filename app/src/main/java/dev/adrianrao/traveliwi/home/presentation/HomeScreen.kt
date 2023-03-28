@@ -1,33 +1,19 @@
 package dev.adrianrao.traveliwi.home.presentation
 
 import androidx.activity.compose.BackHandler
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.gestures.rememberScrollableState
-import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Text
-import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Shadow
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import coil.compose.AsyncImage
 import dev.adrianrao.traveliwi.home.domain.model.Region
 import dev.adrianrao.traveliwi.home.presentation.components.*
 
@@ -39,14 +25,14 @@ fun HomeScreen(
 
     if (state.showDialog) {
         HomeFilterDialog(onDismiss = {
-            viewModel.onFilterDismiss()
+            viewModel.onEvent(HomeEvent.OnFilterDismiss)
         }, filterSettings = state.filterSettings, onAction = {
-            viewModel.onSettingsChange(it)
+            viewModel.onEvent(HomeEvent.OnSettingsChange(it))
         })
     }
 
     BackHandler(state.reply != null) {
-        viewModel.onBackPress()
+        viewModel.onEvent(HomeEvent.OnBackPress)
     }
 
     LazyColumn(
@@ -69,13 +55,13 @@ fun HomeScreen(
             ) {
                 HomeSearchBar(
                     onSearch = {
-                        viewModel.search()
+                        viewModel.onEvent(HomeEvent.OnClickSearch)
                     },
                     placeholder = "Pais, Ciudad",
                     inputText = state.searchText,
-                    onValueChange = { viewModel.onSearch(it) }
+                    onValueChange = { viewModel.onEvent(HomeEvent.OnSearch(it)) }
                 )
-                HomeFilterButton(onClick = { viewModel.onFilterClick() })
+                HomeFilterButton(onClick = { viewModel.onEvent(HomeEvent.OnFilterClick) })
             }
         }
 
@@ -103,7 +89,7 @@ fun HomeScreen(
                         modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp),
                         selectedRegion = state.selectedRegion,
                         selectRegion = {
-                            viewModel.onRegionSelect(it)
+                            viewModel.onEvent(HomeEvent.OnRegionSelect(it))
                         },
                         regions = Region.values().toList()
                     )
@@ -116,7 +102,7 @@ fun HomeScreen(
                     ) {
                         items(state.popularPlaces) { place ->
                             HomePopularPlace(place = place) {
-                                viewModel.onSearch(it)
+                                viewModel.onEvent(HomeEvent.OnSearch(it))
                             }
                         }
                     }

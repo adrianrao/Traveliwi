@@ -10,7 +10,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.adrianrao.traveliwi.home.domain.model.HomeFilterSettings
 import dev.adrianrao.traveliwi.home.domain.model.Region
 import dev.adrianrao.traveliwi.home.domain.repository.HomeRepository
-import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -32,26 +31,46 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun onSearch(newText: String) {
+    fun onEvent(event: HomeEvent) {
+        when (event) {
+            HomeEvent.OnBackPress -> onBackPress()
+            HomeEvent.OnClickSearch -> search()
+            HomeEvent.OnFilterClick -> onFilterClick()
+            HomeEvent.OnFilterDismiss -> onFilterDismiss()
+            is HomeEvent.OnRegionSelect -> {
+                onRegionSelect(event.region)
+            }
+
+            is HomeEvent.OnSearch -> {
+                onSearch(event.newText)
+            }
+
+            is HomeEvent.OnSettingsChange -> {
+                onSettingsChange(event.action)
+            }
+        }
+    }
+
+    private fun onSearch(newText: String) {
         state = state.copy(
             searchText = newText
         )
     }
 
-    fun onFilterClick() {
+    private fun onFilterClick() {
         state = state.copy(
             showDialog = !state.showDialog
         )
     }
 
-    fun onFilterDismiss() {
+    private fun onFilterDismiss() {
         state = state.copy(
             showDialog = false,
             filterSettings = HomeFilterSettings()
         )
     }
 
-    fun onSettingsChange(action: HomeFilterDialogAction) {
+    private fun onSettingsChange(action: HomeFilterDialogAction) {
         when (action) {
 
             HomeFilterDialogAction.OnApplyClick -> {
@@ -96,20 +115,20 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun onBackPress() {
+    private fun onBackPress() {
         state = state.copy(
             reply = null
         )
     }
 
-    fun onRegionSelect(region: Region) {
+    private fun onRegionSelect(region: Region) {
         state = state.copy(
             selectedRegion = region,
             popularPlaces = if (region == Region.TODAS) state.popularPlacesBackup else state.popularPlacesBackup.filter { it.region == region }
         )
     }
 
-    fun search() {
+    private fun search() {
         viewModelScope.launch {
 
             state = state.copy(
