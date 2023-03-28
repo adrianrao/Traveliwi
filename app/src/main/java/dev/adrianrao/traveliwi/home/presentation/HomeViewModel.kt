@@ -20,6 +20,17 @@ class HomeViewModel @Inject constructor(
     var state by mutableStateOf(HomeState())
         private set
 
+    init {
+        viewModelScope.launch {
+            repository.getPopularPlaces().onSuccess {
+                state = state.copy(
+                    popularPlaces = it,
+                    popularPlacesBackup = it
+                )
+            }
+        }
+    }
+
     fun onSearch(newText: String) {
         state = state.copy(
             searchText = newText
@@ -92,7 +103,8 @@ class HomeViewModel @Inject constructor(
 
     fun onRegionSelect(region: Region) {
         state = state.copy(
-            selectedRegion = region
+            selectedRegion = region,
+            popularPlaces = if (region == Region.TODAS) state.popularPlacesBackup else state.popularPlacesBackup.filter { it.region == region }
         )
     }
 
