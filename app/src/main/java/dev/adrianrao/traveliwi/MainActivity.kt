@@ -10,7 +10,12 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
+import dev.adrianrao.traveliwi.home.domain.repository.HomeRepository
+import dev.adrianrao.traveliwi.home.presentation.HomeScreen
 import dev.adrianrao.traveliwi.ui.theme.TraveliwiTheme
 
 @AndroidEntryPoint
@@ -21,7 +26,13 @@ class MainActivity : ComponentActivity() {
             TraveliwiTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.background) {
-
+                    val navController = rememberNavController()
+                    val startDestination = "home"
+                    NavHost(navController, startDestination) {
+                        composable("home") {
+                            HomeScreen()
+                        }
+                    }
                 }
             }
         }
