@@ -18,18 +18,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import dev.adrianrao.traveliwi.home.domain.model.Region
-import dev.adrianrao.traveliwi.home.presentation.components.HomeFilterButton
-import dev.adrianrao.traveliwi.home.presentation.components.HomeFilterDialog
-import dev.adrianrao.traveliwi.home.presentation.components.HomePopularFilter
-import dev.adrianrao.traveliwi.home.presentation.components.HomeSearchBar
+import dev.adrianrao.traveliwi.home.presentation.components.*
 
 @Composable
 fun HomeScreen(
@@ -114,26 +114,9 @@ fun HomeScreen(
                         horizontalArrangement = Arrangement.spacedBy(24.dp),
                         contentPadding = PaddingValues(horizontal = 16.dp)
                     ) {
-                        items(state.popularPlaces) {
-                            Box(
-                                modifier = Modifier.size(180.dp, 250.dp).clip(RoundedCornerShape(20.dp))
-                                    .clickable {
-                                        viewModel.onSearch("${it.country}, ${it.city}")
-                                    }
-                            ) {
-                                AsyncImage(
-                                    model = it.image,
-                                    contentDescription = "${it.country} ${it.city}",
-                                    contentScale = ContentScale.Crop,
-                                    modifier = Modifier.fillMaxSize()
-                                )
-                                Text(
-                                    text = "${it.country}, ${it.city}",
-                                    color = Color.White,
-                                    fontSize = 13.sp,
-                                    fontWeight = FontWeight.Black,
-                                    modifier = Modifier.align(Alignment.BottomStart).padding(12.dp)
-                                )
+                        items(state.popularPlaces) { place ->
+                            HomePopularPlace(place = place) {
+                                viewModel.onSearch(it)
                             }
                         }
                     }
