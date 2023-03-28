@@ -82,10 +82,18 @@ class HomeViewModel @Inject constructor(
         }
     }
 
+    fun onBackPress(){
+        state = state.copy(
+            reply = null
+        )
+    }
+
     fun search() {
         viewModelScope.launch {
-            repository.getTravelInformation(state.searchText,state.filterSettingsBackup).onSuccess {
-                Log.d("HomeViewModel", it)
+            repository.getTravelInformation(state.searchText, state.filterSettingsBackup).onSuccess {
+                state = state.copy(
+                    reply = it
+                )
             }.onFailure {
                 Log.e("HomeViewModel", it.message.toString())
             }
