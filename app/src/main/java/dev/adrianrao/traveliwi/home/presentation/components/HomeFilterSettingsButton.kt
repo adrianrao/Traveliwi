@@ -11,6 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
+import dev.adrianrao.traveliwi.ui.theme.DarkGreen
 
 @Composable
 fun HomeFilterSettingsButton(
@@ -26,7 +27,7 @@ fun HomeFilterSettingsButton(
         contentPadding = PaddingValues(0.dp)
     ) {
         if (icon != null) {
-            Icon(imageVector = icon, contentDescription = "icon", tint = Color.Green)
+            Icon(imageVector = icon, contentDescription = "icon", tint = DarkGreen)
         }
     }
 }

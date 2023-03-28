@@ -12,13 +12,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import dev.adrianrao.traveliwi.ui.theme.BackgroundGray
+import dev.adrianrao.traveliwi.ui.theme.DarkGreen
 
 @Composable
 fun HomeSearchBar(
     onSearch: () -> Unit,
-    onValueChange: (String) -> Unit,
     placeholder: String,
     inputText: String,
+    onValueChange: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     OutlinedTextField(
@@ -27,14 +29,19 @@ fun HomeSearchBar(
         placeholder = {
             Text(text = placeholder)
         },
-        modifier = modifier.background(color = Color.LightGray, shape = RoundedCornerShape(86.dp)),
+        modifier = modifier.background(color = BackgroundGray, shape = RoundedCornerShape(86.dp)),
         singleLine = true,
         trailingIcon = {
-            HomeSearchButton(icon = Icons.Default.Search, onClick = onSearch, modifier = Modifier.padding(8.dp))
+            HomeSearchButton(
+                icon = Icons.Default.Search,
+                onClick = onSearch,
+                modifier = Modifier.padding(8.dp)
+            )
         },
         colors = TextFieldDefaults.outlinedTextFieldColors(
             focusedBorderColor = Color.Transparent,
-            unfocusedBorderColor = Color.Transparent
+            unfocusedBorderColor = Color.Transparent,
+            cursorColor = DarkGreen
         )
     )
 }

@@ -10,6 +10,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import dev.adrianrao.traveliwi.ui.theme.FilterColor
+import dev.adrianrao.traveliwi.ui.theme.FilterGray
 
 @Composable
 fun HomeFilterButton(
@@ -18,8 +20,8 @@ fun HomeFilterButton(
 ) {
     IconButton(
         onClick = onClick,
-        modifier = modifier.background(color = Color.LightGray, shape = RoundedCornerShape(13.dp))
+        modifier = modifier.background(color = FilterGray, shape = RoundedCornerShape(13.dp))
     ) {
-        Icon(imageVector = Icons.Default.Tune, contentDescription = "Filter", tint = Color.Gray)
+        Icon(imageVector = Icons.Default.Tune, contentDescription = "filter", tint = FilterColor)
     }
 }
